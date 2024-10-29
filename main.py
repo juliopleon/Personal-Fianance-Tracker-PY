@@ -38,6 +38,12 @@ class CSV:
         start_date = datetime.strftime(start_date, CSV.FORMAT)
         end_date = datetime.strftime(end_date, CSV.FORMAT)
 
+        mask = (df["date"] >= start_date) & (df["date"] <= end_date)
+        filtered_df = df.loc[mask]
+
+        if filtered_df.empty:
+            print('No transactions found in the given date range')
+
 
 def add():
     CSV.initialize_csv()
