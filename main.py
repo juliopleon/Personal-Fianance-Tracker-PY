@@ -35,14 +35,14 @@ class CSV:
     def get_transactions(cls, start_date, end_date):
         df = pd.read_csv(cls.CSV_FILE)
         df["date"] = pd.to_datetime(df["date"], format=CSV.FORMAT)
-        start_date = datetime.strftime(start_date, CSV.FORMAT)
-        end_date = datetime.strftime(end_date, CSV.FORMAT)
+        start_date = datetime.strptime(start_date, CSV.FORMAT)
+        end_date = datetime.strptime(end_date, CSV.FORMAT)
 
         mask = (df["date"] >= start_date) & (df["date"] <= end_date)
         filtered_df = df.loc[mask]
 
         if filtered_df.empty:
-            print("No transactions found in the given date range")
+            print("No transactions found in the given date range.")
         else:
             print(
                 f"Transactions from {start_date.strftime(CSV.FORMAT)} to {end_date.strftime(CSV.FORMAT)}")
@@ -58,6 +58,8 @@ class CSV:
             print(f"Total Expense: ${total_expense:.2f}")
             print(f"Net Savings: ${(total_income - total_expense):.2f}")
 
+        return filtered_df
+
 
 def add():
     CSV.initialize_csv()
@@ -69,4 +71,5 @@ def add():
     CSV.add_entry(date, amount, category, description)
 
 
+CSV.get_transactions("01-01-2024", "12-30-2024")
 add()
