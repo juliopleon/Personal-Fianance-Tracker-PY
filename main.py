@@ -71,5 +71,7 @@ def add():
     CSV.add_entry(date, amount, category, description)
 
 
-CSV.get_transactions("01-01-2024", "12-30-2024")
-add()
+def main():
+    while True:
+        print("\n1. Add a new transaction")
+        print("\n.2 View Transactions and a summary within a date range")
